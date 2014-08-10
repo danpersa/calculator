@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require './lib/calculator'
+require 'logging'
+
+calc = Calculator::Calc.new
+
+Logging.logger['Calculator::Parser'].level = :debug
+Logging.logger['Calculator::Parser'].add_appenders(Logging.appenders.stdout)
+# Logging.logger['Calculator::Parser'].add_appenders(Logging.appenders.file('logs/logs.log'))
+
+input = ARGV.map { |arg| arg }.join ' '
+
+puts "Input: #{input}"
+
+result = calc.calc input
+puts "Result: #{result}"

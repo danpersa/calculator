@@ -12,7 +12,7 @@ require 'racc/parser.rb'
 module Calculator
   class Parser < Racc::Parser
 
-module_eval(<<'...end parser.racc/module_eval...', 'parser.racc', 27)
+module_eval(<<'...end parser.racc/module_eval...', 'parser.racc', 19)
   def initialize
     @logger = Logging.logger[self]
   end
@@ -32,20 +32,20 @@ module_eval(<<'...end parser.racc/module_eval...', 'parser.racc', 27)
 ##### State transition tables begin ###
 
 racc_action_table = [
-     5,    11,     3,     7,     8,     6,     5,    10,     4,     7,
-     8,     6,    12,    13,    14,     3 ]
+     5,     6,     7,     8,     5,     6,     7,     8,    11,     3,
+    10,     4,    12,    13,    14,     3 ]
 
 racc_action_check = [
-     9,     5,     3,     9,     9,     9,     2,     4,     1,     2,
-     2,     2,     6,     7,     8,     0 ]
+     9,     9,     9,     9,     2,     2,     2,     2,     5,     3,
+     4,     1,     6,     7,     8,     0 ]
 
 racc_action_pointer = [
-    12,     8,     4,    -1,     7,    -2,     9,    10,    11,    -2,
+    13,    11,     1,     7,    10,     6,    10,    11,    12,    -3,
    nil,   nil,   nil,   nil,   nil ]
 
 racc_action_default = [
-   -12,   -12,    -1,    -6,   -12,   -12,   -12,   -12,   -12,    -7,
-    15,    -8,    -9,   -10,   -11 ]
+    -8,    -8,    -1,    -2,    -8,    -8,    -8,    -8,    -8,    -3,
+    15,    -4,    -5,    -6,    -7 ]
 
 racc_goto_table = [
      2,     1,   nil,     9 ]
@@ -54,40 +54,35 @@ racc_goto_check = [
      2,     1,   nil,     2 ]
 
 racc_goto_pointer = [
-   nil,     1,     0,   nil,   nil,   nil,   nil ]
+   nil,     1,     0 ]
 
 racc_goto_default = [
-   nil,   nil,   nil,   nil,   nil,   nil,   nil ]
+   nil,   nil,   nil ]
 
 racc_reduce_table = [
   0, 0, :racc_error,
-  1, 9, :_reduce_none,
-  2, 11, :_reduce_2,
-  2, 12, :_reduce_none,
-  2, 13, :_reduce_none,
-  2, 14, :_reduce_none,
-  1, 10, :_reduce_6,
-  2, 10, :_reduce_7,
-  3, 10, :_reduce_8,
-  3, 10, :_reduce_9,
-  3, 10, :_reduce_10,
-  3, 10, :_reduce_11 ]
+  1, 8, :_reduce_none,
+  1, 9, :_reduce_2,
+  2, 9, :_reduce_3,
+  3, 9, :_reduce_4,
+  3, 9, :_reduce_5,
+  3, 9, :_reduce_6,
+  3, 9, :_reduce_7 ]
 
-racc_reduce_n = 12
+racc_reduce_n = 8
 
 racc_shift_n = 15
 
 racc_token_table = {
   false => 0,
   :error => 1,
-  :ADD => 2,
-  :DIGIT => 3,
-  :SUBSTRACT => 4,
+  :DIGIT => 2,
+  :ADD => 3,
+  :SUBTRACT => 4,
   :MULTIPLY => 5,
-  :DIVIDE => 6,
-  :SUBTRACT => 7 }
+  :DIVIDE => 6 }
 
-racc_nt_base = 8
+racc_nt_base = 7
 
 racc_use_result_var = true
 
@@ -110,19 +105,14 @@ Racc_arg = [
 Racc_token_to_s_table = [
   "$end",
   "error",
-  "ADD",
   "DIGIT",
-  "SUBSTRACT",
+  "ADD",
+  "SUBTRACT",
   "MULTIPLY",
   "DIVIDE",
-  "SUBTRACT",
   "$start",
   "target",
-  "expression",
-  "add",
-  "substract",
-  "multiply",
-  "divide" ]
+  "expression" ]
 
 Racc_debug_parser = false
 
@@ -134,54 +124,41 @@ Racc_debug_parser = false
 
 module_eval(<<'.,.,', 'parser.racc', 5)
   def _reduce_2(val, _values, result)
-     puts "M add #{val.to_s}"; return val[1] 
-    result
-  end
-.,.,
-
-# reduce 3 omitted
-
-# reduce 4 omitted
-
-# reduce 5 omitted
-
-module_eval(<<'.,.,', 'parser.racc', 13)
-  def _reduce_6(val, _values, result)
      @logger.debug "M DIGIT #{val.to_s}"; return val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.racc', 14)
-  def _reduce_7(val, _values, result)
+module_eval(<<'.,.,', 'parser.racc', 6)
+  def _reduce_3(val, _values, result)
      @logger.debug "M #{val.to_s}"; return val[0] 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.racc', 15)
-  def _reduce_8(val, _values, result)
+module_eval(<<'.,.,', 'parser.racc', 7)
+  def _reduce_4(val, _values, result)
      @logger.debug "M ADD #{val.to_s}"; return val[0] + val[2] 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.racc', 16)
-  def _reduce_9(val, _values, result)
+module_eval(<<'.,.,', 'parser.racc', 8)
+  def _reduce_5(val, _values, result)
      @logger.debug "M SUB #{val.to_s}"; return val[0] - val[2] 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.racc', 17)
-  def _reduce_10(val, _values, result)
+module_eval(<<'.,.,', 'parser.racc', 9)
+  def _reduce_6(val, _values, result)
      @logger.debug "M MUL #{val.to_s}"; return val[0] * val[2] 
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.racc', 18)
-  def _reduce_11(val, _values, result)
+module_eval(<<'.,.,', 'parser.racc', 10)
+  def _reduce_7(val, _values, result)
      @logger.debug "M DIV #{val.to_s}"; return val[0] / val[2] 
     result
   end

@@ -3,14 +3,6 @@ class Calculator::Parser
 rule
   target: expression
 
-  add : ADD DIGIT { puts "M add #{val.to_s}"; return val[1] }
-
-  substract : SUBSTRACT DIGIT
-
-  multiply : MULTIPLY DIGIT
-
-  divide : DIVIDE DIGIT
-
   expression : DIGIT { @logger.debug "M DIGIT #{val.to_s}"; return val[0]}
   | DIGIT expression { @logger.debug "M #{val.to_s}"; return val[0] }
   | expression ADD DIGIT       { @logger.debug "M ADD #{val.to_s}"; return val[0] + val[2] }
